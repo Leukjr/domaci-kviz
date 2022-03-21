@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Quiz from "./Quiz/Quiz";
+import WelcomeScreen from "./WelcomeScreen/WelcomeScreen.jsx";
+import quizQuestionsData from "./contexts/QuizQuestionsData";
+import quizQuestions from "./constants/quizQuestions";
 
 function App() {
+  const [isQuizVisible, setIsQuizVisible] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <quizQuestionsData.Provider value={{ questions: quizQuestions }}>
+        {isQuizVisible ? <Quiz /> : <WelcomeScreen />}
+        {isQuizVisible ? (
+          <button onClick={() => setIsQuizVisible(false)}>Odustani</button>
+        ) : (
+          <button onClick={() => setIsQuizVisible(true)}>Start</button>
+        )}
+      </quizQuestionsData.Provider>
     </div>
   );
 }
